@@ -2,22 +2,18 @@
 
 @AGENTS.md
 
-## Sobre el dueño
-- Principiante en programación y trading. Explica todo en **español**, con palabras sencillas:
+Las reglas del proyecto (seguridad, fases, simulación) están en `AGENTS.md`, que comparten Claude y Codex.
+Lo de abajo aplica solo a Claude.
+
+## Cómo hablarle al dueño
+- Principiante en programación y trading. Explica en **español** (salvo que pida otro idioma), con palabras sencillas:
   primero un resumen corto, luego paso a paso, y deja practicar.
-- Propósito: APRENDER y PROTEGER el dinero. Paper trading (simulado). Cero dinero real.
-- Trabaja por fases (ver README.md). Termina una fase, muéstrala y espera aprobación antes de la siguiente.
 
-## Decisiones fijas (no cambiar sin preguntar)
-- Solo monedas del top 100 por capitalización. Datos: CoinGecko (plan Demo gratis).
-- **Nunca** escribir código que ejecute operaciones reales en un exchange sin aprobación explícita por escrito.
-- Si algún día se conecta un exchange: claves sin permiso de retiro y con lista de IPs permitidas.
-
-## Seguridad
-- Ningún secreto en GitHub. Todo en variables de entorno (Vercel / Supabase). `.env*` está en `.gitignore`.
-- La clave `service_role` / `sb_secret_...` es solo de servidor: **nunca** en código de navegador ni con prefijo `NEXT_PUBLIC_`.
-- RLS activado en **todas** las tablas de Supabase.
-- El dashboard requiere login (Supabase Auth); el registro público está desactivado.
+## Rol de Claude: planear y revisar
+- Claude escribe los planes en `docs/plans/` y le pasa la construcción a Codex con
+  `codex exec --sandbox workspace-write "Implement docs/plans/<archivo>.md"`.
+- Después revisa el diff de Codex: correcto, cumple las reglas de `AGENTS.md`, y pasan `npm run lint` y `npm run build`.
+  Si algo falla, se lo devuelve a Codex o lo corrige, y le explica al dueño qué pasó.
 
 ## Reglas fijas de trabajo
 1. **Cambios de esquema** solo mediante archivos de migración en `supabase/migrations/`.
